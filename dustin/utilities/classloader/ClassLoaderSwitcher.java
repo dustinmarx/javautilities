@@ -1,4 +1,4 @@
-package javautilities.dustin.utilities.classloader;
+package dustin.utilities.classloader;
 
 /**
  * Utility class for running operations on an explicitly specified class loader.

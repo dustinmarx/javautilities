@@ -1,4 +1,4 @@
-package javautilities.dustin.utilities.classloader;
+package dustin.utilities.classloader;
 
 /**
  * Describes action to be executed that is declared

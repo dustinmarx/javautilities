@@ -9,6 +9,10 @@ import java.util.function.Supplier;
  * Contains static methods intended for wrapping standard functions
  * with "wrapper" functions that are capable of throwing checked
  * exceptions.
+ * 
+ * These methods are static so that code that uses these methods
+ * can optionally statically import these methods to avoid needing
+ * to spell out this class's name when using this class's methods.
  */
 public class ExceptionThrowingFunctionWrappers
 {

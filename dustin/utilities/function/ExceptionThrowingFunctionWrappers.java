@@ -1,5 +1,8 @@
 package dustin.utilities.function;
 
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -9,7 +12,7 @@ import java.util.function.Supplier;
  * Contains static methods intended for wrapping standard functions
  * with "wrapper" functions that are capable of throwing checked
  * exceptions.
- * 
+ *
  * These methods are static so that code that uses these methods
  * can optionally statically import these methods to avoid needing
  * to spell out this class's name when using this class's methods.
@@ -37,9 +40,20 @@ public class ExceptionThrowingFunctionWrappers
          {
             return wrappedFunction.apply(inputArgument);
          }
+         catch (RuntimeException runtimeException)
+         {
+            throw runtimeException;
+         }
          catch (Exception exception)
          {
-            throw new RuntimeException(exception);
+            if (exception instanceof IOException)
+            {
+               throw new UncheckedIOException((IOException)exception);
+            }
+            else
+            {
+               throw new RuntimeException(exception);
+            }
          }
       };
    }
@@ -65,9 +79,20 @@ public class ExceptionThrowingFunctionWrappers
         {
            wrappedConsumer.accept(consumed);
         }
+        catch (RuntimeException runtimeException)
+        {
+           throw runtimeException;
+        }
         catch (Exception exception)
         {
-           throw new RuntimeException(exception);
+           if (exception instanceof IOException)
+           {
+              throw new UncheckedIOException((IOException)exception);
+           }
+           else
+           {
+              throw new RuntimeException(exception);
+           }
         }
       };
    }
@@ -93,9 +118,20 @@ public class ExceptionThrowingFunctionWrappers
          {
             return wrappedSupplier.get();
          }
+         catch (RuntimeException runtimeException)
+         {
+            throw runtimeException;
+         }
          catch (Exception exception)
          {
-            throw new RuntimeException(exception);
+            if (exception instanceof IOException)
+            {
+               throw new UncheckedIOException((IOException)exception);
+            }
+            else
+            {
+               throw new RuntimeException(exception);
+            }
          }
       };
    }
@@ -121,9 +157,59 @@ public class ExceptionThrowingFunctionWrappers
          {
             return wrappedPredicate.test(test);
          }
+         catch (RuntimeException runtimeException)
+         {
+            throw runtimeException;
+         }
          catch (Exception exception)
          {
-            throw new RuntimeException(exception);
+            if (exception instanceof IOException)
+            {
+               throw new UncheckedIOException((IOException)exception);
+            }
+            else
+            {
+               throw new RuntimeException(exception);
+            }
+         }
+      };
+   }
+
+   /**
+    * Accepts a BiConsumer that potentially throws an Exception
+    * (even a checked exception), but only throws an unchecked
+    * exception when the checked or unchecked exception is
+    * encountered.
+    *
+    * @param wrappedBiConsumer BiConsumer that potentially throws
+    *    a checked exception.
+    * @param <T> Input argument.
+    * @param <E> Potential exception thrown by provided BiConsumer.
+    * @return Standard JDK BiConsumer that only throws unchecked exceptions.
+    */
+   public static <T, U, E extends Exception> BiConsumer<T, U> wrapBiConsumer(
+      final ExceptionThrowingBiConsumer<T, U, E> wrappedBiConsumer)
+   {
+      return (consumed1, consumed2) ->
+      {
+         try
+         {
+            wrappedBiConsumer.accept(consumed1, consumed2);
+         }
+         catch (RuntimeException runtimeException)
+         {
+            throw runtimeException;
+         }
+         catch (Exception exception)
+         {
+            if (exception instanceof IOException)
+            {
+               throw new UncheckedIOException((IOException)exception);
+            }
+            else
+            {
+               throw new RuntimeException(exception);
+            }
          }
       };
    }

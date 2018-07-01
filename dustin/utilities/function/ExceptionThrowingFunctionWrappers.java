@@ -183,7 +183,8 @@ public class ExceptionThrowingFunctionWrappers
     *
     * @param wrappedBiConsumer BiConsumer that potentially throws
     *    a checked exception.
-    * @param <T> Input argument.
+    * @param <T> First input argument.
+    * @param <U> Second input argument.
     * @param <E> Potential exception thrown by provided BiConsumer.
     * @return Standard JDK BiConsumer that only throws unchecked exceptions.
     */

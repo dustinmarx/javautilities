@@ -1,7 +1,5 @@
 package dustin.utilities.exceptions;
 
-import java.net.http.HttpTimeoutException;
-
 /**
  * Unchecked version of {@link java.net.http.HttpTimeoutException}.
  *
@@ -24,7 +22,7 @@ public class UncheckedHttpTimeoutException extends RuntimeException
     *
     * @param newMessage Message for the unchecked HTTP timeout exception.
     * @param newCausal New causal for this unchecked HTTP timeout exception
-    *    (likely to be an instance of {@link HttpTimeoutException}).
+    *    (likely to be an instance of {@link java.net.http.HttpTimeoutException}).
     */
    public UncheckedHttpTimeoutException(final String newMessage, final Throwable newCausal)
    {
@@ -35,7 +33,7 @@ public class UncheckedHttpTimeoutException extends RuntimeException
     * Constructor accepting a causal.
     *
     * @param newCausal New causal for this unchecked HTTP timeout exception
-    *    (likely to be an instance of {@link HttpTimeoutException}).
+    *    (likely to be an instance of {@link java.net.http.HttpTimeoutException}).
     */
    public UncheckedHttpTimeoutException(final Throwable newCausal)
    {
